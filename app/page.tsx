@@ -64,6 +64,7 @@ export default function Home() {
     }
   }
 
+
   function calculateAverage() {
     const validNumbers = users.filter((item) => !isNaN(Number(item.value)));
 
@@ -153,7 +154,7 @@ export default function Home() {
           </div>
         </div>
         <div className='flex flex-col w-full mt-2 '>
-          <div className='flex items-center justify-between w-full bg-stone-950 text-stone-50 rounded '>
+          <div className='flex uppercase text-sm items-center justify-between w-full bg-stone-950 text-stone-50 rounded '>
             <div className='flex w-64 text-left pl-4 truncate py-2 px-4 font-semibold'>
               Nome
             </div>

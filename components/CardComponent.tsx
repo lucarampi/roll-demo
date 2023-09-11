@@ -23,15 +23,17 @@ export default function CardComponent({
 }: CardComponentProps) {
   const getValue = () => {
     if (isNaN(Number(value))) {
-      if (value.toUpperCase() === ValueIcons.SKULL) {
-        return <PiSkull />;
+        console.log("🚀 ~ file: CardComponent.tsx:27 ~ getValue ~ value:", value)
+        if (value.toUpperCase() === ValueIcons.SKULL) {
+        return PiSkull;
       }
       if (value.toUpperCase() === ValueIcons.ROCKET) {
-        return <PiRocketLaunch />;
+        return PiRocketLaunch ;
       }
     }
     return value;
   };
+  console.log("🚀 ~ file: CardComponent.tsx:35 ~ getValue ~ getValue:", getValue())
 
   return (
     <div
