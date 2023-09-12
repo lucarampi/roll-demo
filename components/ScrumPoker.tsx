@@ -83,12 +83,12 @@ export default function ScrumPoker({
 
   function calculateTotal() {
     const validNumbers = players.filter(
-      (item: { value: any }) => !isNaN(Number(item.vote))
+      (player: { vote: string }) => !isNaN(Number(player.vote))
     );
 
     const sum =
       validNumbers.reduce(
-        (acc: number, item: { value: any }) => acc + Number(item.vote),
+        (acc: number, player: { vote: string }) => acc + Number(player.vote),
         0
       ) || 0;
 
