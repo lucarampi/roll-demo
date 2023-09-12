@@ -1,3 +1,6 @@
+import { getValue } from "./CardComponent";
+import { ValueIcons } from "./ScrumPoker";
+
 interface ResultRowProps {
   name: string;
   value: string;
@@ -16,8 +19,14 @@ export default function ResultRow({
       }`}>
       <div className='flex w-64 text-left pl-4 truncate py-2'>{name}</div>
       {showValue ? (
-        <div className='flex flex-1 justify-end pr-4 truncate py-2 '>
-          {value}
+        <div
+          className={`flex flex-1 justify-end pr-4 truncate py-2  ${
+            value?.toUpperCase() === ValueIcons.ROCKET ||
+            value?.toUpperCase() === ValueIcons.SKULL
+              ? "text-2xl"
+              : ""
+          } `}>
+          {getValue(value)}
         </div>
       ) : (
         <div className='flex flex-1 justify-end pr-4 truncate py-2 blur-[4px] '>

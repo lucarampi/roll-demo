@@ -54,24 +54,6 @@ export default function ScrumPoker({
   console.log("🚀 ~ file: ScrumPoker.tsx:54 ~ players:", players);
   const supabase = createClientComponentClient();
 
-  function generateUsers() {
-    const fakeUsers = [
-      {
-        name: faker.person.firstName(),
-        value: faker.number.int({ max: 100, min: 0 }).toString(),
-      },
-      {
-        name: faker.person.firstName(),
-        value: "SKULL",
-      },
-      {
-        name: faker.person.firstName(),
-        value: faker.number.int({ max: 100, min: 0 }).toString(),
-      },
-    ];
-    return [...fakeUsers];
-  }
-
   async function handleSubmitSelectedValue() {
     const isValidValue = selectedValue ?? false;
     if (isValidValue) {
@@ -84,12 +66,12 @@ export default function ScrumPoker({
 
   function calculateAverage() {
     const validNumbers = players.filter(
-      (item: { value: any }) => !isNaN(Number(item.vote))
+      (player: { vote: string }) => !isNaN(Number(player.vote))
     );
 
     const average =
       (validNumbers.reduce(
-        (acc: number, val: { value: any }) => acc + Number(val.vote),
+        (acc: number, player: { vote: string }) => acc + Number(player.vote),
         0
       ) || 0) / validNumbers.length;
 
@@ -130,7 +112,8 @@ export default function ScrumPoker({
           const { data: socreData, error } = await supabase
             .from("scrum_users")
             .select("*")
-            .eq("room_id", roomData.id);
+            .eq("room_id", roomData.id)
+            .order("name", { ascending: true });
           if (error) {
             console.log(error);
             return;
@@ -206,8 +189,8 @@ export default function ScrumPoker({
             </button>
           </div>
         </div>
-        <div className='flex flex-col w-full mt-2 '>
-          <div className='flex uppercase text-sm items-center justify-between w-full bg-stone-950 text-stone-50 rounded '>
+        <div className='flex flex-col w-full'>
+          <div className='flex uppercase text-sm items-center justify-between w-full bg-stone-950 text-stone-50 rounded  mt-2 mb-1  '>
             <div className='flex w-64 text-left pl-4 truncate py-2 px-4 font-semibold'>
               Nome
             </div>
@@ -217,20 +200,44 @@ export default function ScrumPoker({
           </div>
           {/* Users selections */}
           {!!players && !!players.length ? (
-            players.map((user: { name: string; value: string }, index: any) => (
-              <ResultRow
-                name={user.name}
-                value={user.vote}
-                showValue={showValues}
-                key={index}
-              />
-            ))
+            [
+              ...players.map(
+                (user: { name: string; vote: string }, index: any) => (
+                  <ResultRow
+                    name={user.name}
+                    value={user.vote}
+                    showValue={showValues}
+                    key={index}
+                  />
+                )
+              ),
+              ...players.map(
+                (user: { name: string; vote: string }, index: any) => (
+                  <ResultRow
+                    name={user.name}
+                    value={user.vote}
+                    showValue={showValues}
+                    key={index}
+                  />
+                )
+              ),
+              ...players.map(
+                (user: { name: string; vote: string }, index: any) => (
+                  <ResultRow
+                    name={user.name}
+                    value={user.vote}
+                    showValue={showValues}
+                    key={index}
+                  />
+                )
+              ),
+            ]
           ) : (
-            <div className='truncate py-4 text-center text-stone-600'>
-              Estranho... Parace que não temos nada por aqui!
+            <div className='truncate py-2 text-center text-stone-600'>
+              Parace que não temos nada por aqui!
             </div>
           )}
-          <div className='flex items-center justify-between w-full border-t-2 border-stone-950  '>
+          <div className='flex items-center justify-between w-full border-t-2 border-stone-950 mt-1  '>
             <div className='flex w-64 text-left pl-4 truncate py-2 px-4 font-semibold'>
               Média: {calculateAverage()}
             </div>

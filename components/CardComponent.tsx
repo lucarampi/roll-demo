@@ -15,23 +15,24 @@ interface CardComponentProps {
   isSelected: boolean;
   onClick: () => void;
 }
+export const getValue = (value:string) => {
+  if (isNaN(Number(value))) {
+      if (value.toUpperCase() === ValueIcons.SKULL) {
+      return <PiSkull/>;
+    }
+    if (value.toUpperCase() === ValueIcons.ROCKET) {
+      return <PiRocketLaunch/> ;
+    }
+  }
+  return value;
+};
 
 export default function CardComponent({
   value,
   isSelected,
   onClick,
 }: CardComponentProps) {
-  const getValue = () => {
-    if (isNaN(Number(value))) {
-        if (value.toUpperCase() === ValueIcons.SKULL) {
-        return <PiSkull/>;
-      }
-      if (value.toUpperCase() === ValueIcons.ROCKET) {
-        return <PiRocketLaunch/> ;
-      }
-    }
-    return value;
-  };
+
 
   return (
     <div
@@ -49,7 +50,7 @@ export default function CardComponent({
             ? "text-4xl"
             : "text-2xl"
         }`}>
-        {getValue()}
+        {getValue(value)}
       </div>
       {/* <div className='h-10 bg-red-300'>Footer</div> */}
     </div>
